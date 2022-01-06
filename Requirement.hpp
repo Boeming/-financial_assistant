@@ -33,6 +33,22 @@ struct Requirement
         this->preference = preference;
         this->duration_of_effect = duration_of_effect;
     };
+
+    bool operator<(Requirement &other)
+    {
+        if (this->priority == other.priority)
+        {
+            if (this->price == other.price)
+            {
+                if (this->duration_of_effect == other.duration_of_effect)
+                    return !(other.preference < this->preference);
+                return !(this->duration_of_effect < other.duration_of_effect);
+            }
+            return !(this->price < other.price);
+        }
+        else
+            return !(this->priority < other.priority);
+    }
 };
 
 Requirement create_requirement()
@@ -44,6 +60,5 @@ Requirement create_requirement()
     std::cin >> req.priority;
     std::cin >> req.preference;
     std::cin >> req.duration_of_effect;
-
     return req;
 }
